@@ -6,3 +6,9 @@ infra-apply:
 
 infra-destroy:
 	$(MAKE) -C infra destroy
+
+app-deps-install:
+	$(MAKE) -C src deps-install
+
+app-console:
+	$(MAKE) -C src console
