@@ -25,7 +25,12 @@ resource "aws_iam_policy" "lambda_demo" {
       Action   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
       Resource = "arn:aws:logs:*:*:*",
       Effect   = "Allow"
-    }],
+      }, {
+      Action   = ["dynamodb:PutItem"],
+      Resource = "arn:aws:dynamodb:*:*:*",
+      Effect   = "Allow"
+      }
+    ],
   })
 }
 
@@ -45,7 +50,27 @@ resource "aws_lambda_function" "lambda_demo" {
   function_name    = "lambda_demo"
   role             = aws_iam_role.lambda_demo.arn
   source_code_hash = data.archive_file.dist.output_base64sha256
-  handler          = "function.handler"
+  handler          = "function.Handler.perform"
   runtime          = "ruby3.3"
   depends_on       = [aws_iam_role_policy_attachment.attach_lambda_demo_role_to_policy]
+
+  environment {
+    variables = {
+      ORDERS_SERVICE_APP_ENV           = "production"
+      ORDERS_SERVICE_DYNAMO_TABLE_NAME = "orders"
+      ORDERS_SERVICE_DYNAMO_REGION     = "eu-north-1"
+    }
+  }
+}
+
+resource "aws_dynamodb_table" "orders" {
+  name           = "orders"
+  hash_key       = "order_id"
+  read_capacity  = 1
+  write_capacity = 1
+
+  attribute {
+    name = "order_id"
+    type = "S"
+  }
 }
