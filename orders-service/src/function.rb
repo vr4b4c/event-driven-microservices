@@ -9,8 +9,7 @@ require_relative 'orders_service'
 module Handler
   # @param event [Hash<Object, Object>]
   # @return [Hash<Symbol, Object>]
-  def self.perform(event:, context:)
-    OrdersService.logger.info(event.inspect)
+  def self.perform(event:, **_) # rubocop:disable Metrics/AbcSize
     OrdersService.logger.info(event.transform_keys(&:to_sym).inspect)
     form = OrdersService.new_order_form(event: event.transform_keys(&:to_sym))
 

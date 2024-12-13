@@ -9,7 +9,7 @@ module OrdersService
       end
 
       rule(:total) do
-        key.failure('must be positive') if value < 0
+        key.failure('must be positive') if value.negative?
       end
     end
   end
