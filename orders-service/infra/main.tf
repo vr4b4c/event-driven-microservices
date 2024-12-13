@@ -2,7 +2,7 @@ provider "aws" {
   profile = "private-dev"
 }
 
-data "aws_iam_policy_document" "assume_lambda_demo" {
+data "aws_iam_policy_document" "assume_orders_service" {
   statement {
     effect = "Allow"
     principals {
@@ -13,12 +13,12 @@ data "aws_iam_policy_document" "assume_lambda_demo" {
   }
 }
 
-resource "aws_iam_role" "lambda_demo" {
-  name               = "lambda_demo"
-  assume_role_policy = data.aws_iam_policy_document.assume_lambda_demo.json
+resource "aws_iam_role" "orders_service" {
+  name               = "orders-service"
+  assume_role_policy = data.aws_iam_policy_document.assume_orders_service.json
 }
 
-resource "aws_iam_policy" "lambda_demo" {
+resource "aws_iam_policy" "orders_service" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -34,9 +34,9 @@ resource "aws_iam_policy" "lambda_demo" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "attach_lambda_demo_role_to_policy" {
-  role       = aws_iam_role.lambda_demo.name
-  policy_arn = aws_iam_policy.lambda_demo.arn
+resource "aws_iam_role_policy_attachment" "attach_orders_service" {
+  role       = aws_iam_role.orders_service.name
+  policy_arn = aws_iam_policy.orders_service.arn
 }
 
 data "archive_file" "dist" {
@@ -45,14 +45,14 @@ data "archive_file" "dist" {
   output_path = "${path.module}/../dist/function.zip"
 }
 
-resource "aws_lambda_function" "lambda_demo" {
+resource "aws_lambda_function" "orders_service" {
   filename         = "${path.module}/../dist/function.zip"
-  function_name    = "lambda_demo"
-  role             = aws_iam_role.lambda_demo.arn
+  function_name    = "orders-service"
+  role             = aws_iam_role.orders_service.arn
   source_code_hash = data.archive_file.dist.output_base64sha256
   handler          = "function.Function.perform"
   runtime          = "ruby3.3"
-  depends_on       = [aws_iam_role_policy_attachment.attach_lambda_demo_role_to_policy]
+  depends_on       = [aws_iam_role_policy_attachment.attach_orders_service]
 
   environment {
     variables = {
