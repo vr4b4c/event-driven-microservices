@@ -6,7 +6,7 @@ require 'aws-sdk-dynamodb'
 
 require_relative 'orders_service'
 
-module Handler
+module Function
   # @param event [Hash<Object, Object>]
   # @return [Hash<Symbol, Object>]
   def self.perform(event:, **_) # rubocop:disable Metrics/AbcSize

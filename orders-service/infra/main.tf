@@ -50,7 +50,7 @@ resource "aws_lambda_function" "lambda_demo" {
   function_name    = "lambda_demo"
   role             = aws_iam_role.lambda_demo.arn
   source_code_hash = data.archive_file.dist.output_base64sha256
-  handler          = "function.Handler.perform"
+  handler          = "function.Function.perform"
   runtime          = "ruby3.3"
   depends_on       = [aws_iam_role_policy_attachment.attach_lambda_demo_role_to_policy]
 

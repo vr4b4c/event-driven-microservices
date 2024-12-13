@@ -2,9 +2,9 @@
 
 module OrdersService
   class Repository
-    # @param dynamo_client [Aws::DynamoDB::Client]
-    def initialize(dynamo_client:)
-      @table = Aws::DynamoDB::Resource.new(client: dynamo_client).table(ENV.fetch('ORDERS_SERVICE_DYNAMO_TABLE_NAME'))
+    # @param table [Aws::DynamoDB::Table]
+    def initialize(table:)
+      @table = table
     end
 
     # @param order [OrdersService::Order]

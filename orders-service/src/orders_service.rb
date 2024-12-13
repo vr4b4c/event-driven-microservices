@@ -11,16 +11,10 @@ require_relative 'orders_service/validation/error_item'
 
 module OrdersService
   # @return [OrdersService::Repository]
-  def self.repo
-    @repo ||= Repository.new(
-      dynamo_client: Config.dynamo_client
-    )
-  end
+  def self.repo = @repo ||= Repository.new(table: Config.dynamo_table)
 
   # @return [Logger]
-  def self.logger
-    @logger ||= Logger.new($stdout)
-  end
+  def self.logger = @logger ||= Logger.new($stdout)
 
   # @param event [Hash<Object, Object>]
   # @return [OrdersService::NewOrder::Form]

@@ -3,3 +3,6 @@ deps-install:
 
 console:
 	bin/console
+
+test-suite:
+	bundle exec rspec

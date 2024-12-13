@@ -12,3 +12,6 @@ app-deps-install:
 
 app-console:
 	$(MAKE) -C src console
+
+app-test-suite:
+	$(MAKE) -C src test-suite
