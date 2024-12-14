@@ -74,3 +74,113 @@ resource "aws_dynamodb_table" "orders" {
     type = "S"
   }
 }
+
+resource "aws_api_gateway_rest_api" "ordering_platform_api" {
+  name = "ordering-platform-api"
+}
+
+resource "aws_api_gateway_resource" "ordering_platform_api" {
+  parent_id   = aws_api_gateway_rest_api.ordering_platform_api.root_resource_id
+  path_part   = "orders"
+  rest_api_id = aws_api_gateway_rest_api.ordering_platform_api.id
+}
+
+resource "aws_api_gateway_method" "ordering_platform_api" {
+  authorization = "NONE"
+  http_method   = "POST"
+  resource_id   = aws_api_gateway_resource.ordering_platform_api.id
+  rest_api_id   = aws_api_gateway_rest_api.ordering_platform_api.id
+}
+
+resource "aws_api_gateway_integration" "ordering_platform_api" {
+  http_method             = aws_api_gateway_method.ordering_platform_api.http_method
+  integration_http_method = aws_api_gateway_method.ordering_platform_api.http_method
+  resource_id             = aws_api_gateway_resource.ordering_platform_api.id
+  rest_api_id             = ws_api_gateway_rest_api.ordering_platform_api.id
+  type                    = "AWS"
+  uri                     = aws_lambda_function.orders_service.invoke_arn
+}
+
+resource "aws_api_gateway_deployment" "ordering_platform_api" {
+  rest_api_id = aws_api_gateway_rest_api.ordering_platform_api.id
+
+  triggers = {
+    # NOTE: The configuration below will satisfy ordering considerations,
+    #       but not pick up all future REST API changes. More advanced patterns
+    #       are possible, such as using the filesha1() function against the
+    #       Terraform configuration file(s) or removing the .id references to
+    #       calculate a hash against whole resources. Be aware that using whole
+    #       resources will show a difference after the initial implementation.
+    #       It will stabilize to only change when resources change afterwards.
+    redeployment = sha1(jsonencode([
+      aws_api_gateway_resource.ordering_platform_api.id,
+      aws_api_gateway_method.ordering_platform_api.id,
+      aws_api_gateway_integration.ordering_platform_api.id,
+    ]))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_api_gateway_stage" "ordering_platform_api" {
+  deployment_id = aws_api_gateway_deployment.ordering_platform_api.id
+  rest_api_id   = aws_api_gateway_rest_api.ordering_platform_api.id
+  stage_name    = "dev"
+  #access_log_settings {
+  #  destination_arn = aws_cloudwatch_log_group.ordering_platform_api.arn
+  #  format          = "JSON"
+  #}
+  # depends_on = [aws_cloudwatch_log_group.ordering_platform_api, aws_api_gateway_account.ordering_platform_api]
+}
+
+#resource "aws_cloudwatch_log_group" "ordering_platform_api" {
+#  name              = "API-Gateway-Execution-Logs_${aws_api_gateway_rest_api.ordering_platform_api.id}/dev"
+#  retention_in_days = 1
+#}
+
+#resource "aws_api_gateway_account" "ordering_platform_api" {
+#  cloudwatch_role_arn = aws_iam_role.api_gateway_cloudwatch.arn
+#}
+#
+#data "aws_iam_policy_document" "api_gateway_cloudwatch" {
+#  statement {
+#    effect = "Allow"
+#
+#    principals {
+#      type        = "Service"
+#      identifiers = ["apigateway.amazonaws.com"]
+#    }
+#
+#    actions = ["sts:AssumeRole"]
+#  }
+#}
+#
+#resource "aws_iam_role" "api_gateway_cloudwatch" {
+#  name               = "api_gateway_cloudwatch_global"
+#  assume_role_policy = data.aws_iam_policy_document.api_gateway_cloudwatch.json
+#}
+#
+#data "aws_iam_policy_document" "cloudwatch" {
+#  statement {
+#    effect = "Allow"
+#
+#    actions = [
+#      "logs:CreateLogGroup",
+#      "logs:CreateLogStream",
+#      "logs:DescribeLogGroups",
+#      "logs:DescribeLogStreams",
+#      "logs:PutLogEvents",
+#      "logs:GetLogEvents",
+#      "logs:FilterLogEvents",
+#    ]
+#
+#    resources = ["*"]
+#  }
+#}
+#resource "aws_iam_role_policy" "api_gateway_cloudwatch" {
+#  name   = "default"
+#  role   = aws_iam_role.api_gateway_cloudwatch.id
+#  policy = data.aws_iam_policy_document.api_gateway_cloudwatch.json
+#}
