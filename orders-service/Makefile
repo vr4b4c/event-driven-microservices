@@ -1,6 +1,6 @@
-build-and-deploy:
+apply:
 	$(MAKE) app-dist-archive
-	$(MAKE) infra-plan
+	$(MAKE) infra-apply
 
 infra-plan:
 	$(MAKE) -C infra plan

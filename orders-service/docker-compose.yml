@@ -1,0 +1,8 @@
+name: event-microservices
+
+services:
+  app:
+    build:
+      context: .
+    # volumes:
+    #   - ./src:/var/task
