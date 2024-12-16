@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module OrdersService
-  module NewOrder
+  module CreateOrder
     class Result
       # @return [OrdersService::Order, nil]
       attr_reader :order
 
-      # @param form [OrdersService::NewOrder::Form]
+      # @param form [OrdersService::CreateOrder::Form]
       # @param order [OrdersService::Order, nil]
       def initialize(form:, order: nil)
         @form = form
@@ -21,7 +21,7 @@ module OrdersService
 
       private
 
-      # @return [OrdersService::NewOrder::Form]
+      # @return [OrdersService::CreateOrder::Form]
       attr_reader :form
     end
   end

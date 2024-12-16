@@ -9,9 +9,9 @@ require 'aws-sdk-sqs'
 require_relative 'orders_service/config'
 require_relative 'orders_service/repository'
 require_relative 'orders_service/order'
-require_relative 'orders_service/new_order/contract'
-require_relative 'orders_service/new_order/form'
-require_relative 'orders_service/new_order/result'
+require_relative 'orders_service/create_order/contract'
+require_relative 'orders_service/create_order/form'
+require_relative 'orders_service/create_order/result'
 require_relative 'orders_service/validation/error_item'
 
 module OrdersService
@@ -25,21 +25,23 @@ module OrdersService
     def sqs_client = @sqs_client ||= Aws::SQS::Client.new(region: region)
 
     # @param event [Hash<Object, Object>]
-    # @return [OrdersService::NewOrder::Result]
+    # @return [OrdersService::CreateOrder::Result]
     def create_order(event:)
-      form = NewOrder::Form.new(event:)
+      form = CreateOrder::Form.new(event:)
 
       if form.valid?
         order = repo.add(order: form.to_order)
         publish_order_created_event(order:)
-        NewOrder::Result.new(form:, order:)
+        CreateOrder::Result.new(form:, order:)
       else
-        NewOrder::Result.new(form:)
+        CreateOrder::Result.new(form:)
       end
     end
 
     private
 
+    # @param order [OrdersService::Order]
+    # @return [void]
     def publish_order_created_event(order:)
       logger.info('Dispatching order created event...')
 

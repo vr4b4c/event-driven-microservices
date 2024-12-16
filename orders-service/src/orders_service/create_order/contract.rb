@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OrdersService
-  module NewOrder
+  module CreateOrder
     class Contract < Dry::Validation::Contract
       params do
         required(:customer_id).filled(:string)

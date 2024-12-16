@@ -3,7 +3,7 @@
 require 'securerandom'
 
 module OrdersService
-  module NewOrder
+  module CreateOrder
     class Form
       # @param event [Hash]
       def initialize(event:)
@@ -16,7 +16,7 @@ module OrdersService
       # @return [Array<OrdersService::Validation::ErrorItem>]
       def errors = result.errors.messages.map { Validation::ErrorItem.parse(_1) }
 
-      # @return [OrdersService::NewOrder::Order]
+      # @return [OrdersService::CreateOrder::Order]
       def to_order
         OrdersService::Order.new(
           order_id: SecureRandom.uuid,
