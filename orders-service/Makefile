@@ -17,7 +17,7 @@ app-deps-install:
 app-console:
 	$(MAKE) -C src console
 
-app-test-suite:
+test:
 	$(MAKE) -C src test-suite
 
 app-dist-archive:

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module OrdersService
   class Order
     class Status
@@ -37,6 +39,13 @@ module OrdersService
     # @return [Hash<Symbol, Object>]
     def to_dynamo_item
       { order_id:, customer_id:, order_date: order_date.to_s, status:, total: }
+    end
+
+    # @return [String]
+    def to_json(*_args)
+      JSON.generate(
+        order_id:, customer_id:, order_date: order_date.to_s, status:, total:
+      )
     end
   end
 end

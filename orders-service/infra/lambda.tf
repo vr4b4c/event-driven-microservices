@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "orders_service" {
 resource "aws_lambda_function" "orders_service" {
   function_name    = "orders_service"
   s3_bucket        = data.terraform_remote_state.global.outputs.ordering_platform_api_s3_bucket_id
-  s3_key           =  var.app_archive_s3_key 
+  s3_key           = var.app_archive_s3_key
   runtime          = "ruby3.3"
   handler          = "function.Function.perform"
   source_code_hash = filebase64sha256("../${var.app_archive_path}")
@@ -30,9 +30,12 @@ resource "aws_lambda_function" "orders_service" {
 
   environment {
     variables = {
-      ORDERS_SERVICE_APP_ENV           = var.env
-      ORDERS_SERVICE_DYNAMO_TABLE_NAME = aws_dynamodb_table.orders.name
-      ORDERS_SERVICE_DYNAMO_REGION     = var.region
+      ORDERS_SERVICE_APP_ENV                    = var.env
+      ORDERS_SERVICE_DYNAMO_TABLE_NAME          = aws_dynamodb_table.orders.name
+      ORDERS_SERVICE_DYNAMO_REGION              = var.region
+      ORDERS_SERVICE_ORDER_CREATED_QUEUE_REGION = var.region
+      ORDERS_SERVICE_ORDER_CREATED_QUEUE_URL    = data.terraform_remote_state.global.outputs.ordering_platform_api_order_created_queue_id
+
     }
   }
 }
@@ -45,7 +48,7 @@ resource "aws_cloudwatch_log_group" "orders_service" {
 data "aws_iam_policy_document" "orders_service_others" {
   statement {
     effect    = "Allow"
-    actions   = ["dynamodb:*"]
+    actions   = ["dynamodb:*", "sqs:*"]
     resources = ["*"]
   }
 }
