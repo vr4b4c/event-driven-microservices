@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd ../infra || exit
+cd "$(dirname "$0")/../../infra" || exit
 api_base=$(terraform output -json | jq -r .api_base_url.value)
 
 curl -v "$api_base/orders" \
