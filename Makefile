@@ -9,5 +9,8 @@ destroy:
 platform-infra-plan:
 	$(MAKE) -C infra plan
 
+platform-infra-apply:
+	$(MAKE) -C infra apply
+
 orders-service-infra-plan:
 	$(MAKE) -C orders-service infra-plan

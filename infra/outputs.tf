@@ -12,3 +12,7 @@ output "ordering_platform_api_gateway_api_execution_arn" {
 output "api_base_url" {
   value = aws_apigatewayv2_stage.prod.invoke_url
 }
+
+output "ordering_platform_api_order_created_queue_id" {
+  value = aws_sqs_queue.order_created.id
+}
