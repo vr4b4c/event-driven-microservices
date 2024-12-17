@@ -16,12 +16,9 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-ENV['ORDERS_SERVICE_APP_ENV'] ||= 'test'
-ENV['ORDERS_SERVICE_DYNAMO_TABLE_NAME'] = 'orders'
-ENV['ORDERS_SERVICE_ORDER_CREATED_QUEUE_REGION'] = 'eu-central-1'
-ENV['ORDERS_SERVICE_ORDER_CREATED_QUEUE_URL'] = 'https://sqs.eu-central-1.amazonaws.com/123456789012/order-created'
-
 require 'bundler/setup'
+Bundler.require('test')
+Dotenv.load('.env.test', '.env')
 require_relative '../function'
 
 Dir[File.expand_path('support/**/*.rb', __dir__)].each { |f| require f }
