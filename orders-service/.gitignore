@@ -1,2 +1,4 @@
 src/vendor
-dist
+dist/
+
+src/spec/examples.txt

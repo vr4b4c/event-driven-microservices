@@ -4,12 +4,15 @@ source 'https://rubygems.org'
 
 gem 'aws-sdk-dynamodb', '~> 1.132'
 gem 'aws-sdk-sqs', '~> 1.89'
+gem 'base64'
 gem 'dry-validation', '~> 1.10'
+gem 'logger'
 
 group :development, :test do
   gem 'dotenv'
   gem 'pry'
   gem 'rspec'
   gem 'rubocop'
+  gem 'rubocop-rspec'
   gem 'solargraph'
 end

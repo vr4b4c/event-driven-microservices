@@ -1,4 +1,5 @@
 ## TODO
- - [ ] Add bundle groups to remove non-prod dependencies from the dist archive
- - [ ] Figure out app environment variable management (dotenv?)
- - [ ] Choose shorter prefix for environment variables
+- [ ] Make API gateway secure
+- [x] Add bundle groups to remove non-prod dependencies from the dist archive
+- [x] Figure out app environment variable management (dotenv?)
+- [x] Choose shorter prefix for environment variables
