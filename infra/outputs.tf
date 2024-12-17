@@ -5,7 +5,7 @@ output "ordering_platform_api_gateway_api_id" {
   value = aws_apigatewayv2_api.ordering_platform_api.id
 }
 
-output "ordering_platform_api_gateway_api_execution_arn" { 
+output "ordering_platform_api_gateway_api_execution_arn" {
   value = aws_apigatewayv2_api.ordering_platform_api.execution_arn
 }
 
@@ -15,4 +15,8 @@ output "api_base_url" {
 
 output "ordering_platform_api_order_created_queue_id" {
   value = aws_sqs_queue.order_created.id
+}
+
+output "ordering_platform_api_order_created_queue_arn" {
+  value = aws_sqs_queue.order_created.arn
 }
