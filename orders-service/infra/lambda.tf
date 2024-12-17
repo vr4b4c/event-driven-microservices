@@ -30,11 +30,11 @@ resource "aws_lambda_function" "orders_service" {
 
   environment {
     variables = {
-      ORDERS_SERVICE_APP_ENV                    = var.env
-      ORDERS_SERVICE_DYNAMO_TABLE_NAME          = aws_dynamodb_table.orders.name
-      ORDERS_SERVICE_DYNAMO_REGION              = var.region
-      ORDERS_SERVICE_ORDER_CREATED_QUEUE_REGION = var.region
-      ORDERS_SERVICE_ORDER_CREATED_QUEUE_URL    = data.terraform_remote_state.global.outputs.ordering_platform_api_order_created_queue_id
+      APP_ENV                    = var.env
+      DYNAMO_TABLE_NAME          = aws_dynamodb_table.orders.name
+      DYNAMO_REGION              = var.region
+      ORDER_CREATED_QUEUE_REGION = var.region
+      ORDER_CREATED_QUEUE_URL    = data.terraform_remote_state.global.outputs.ordering_platform_api_order_created_queue_id
 
     }
   }

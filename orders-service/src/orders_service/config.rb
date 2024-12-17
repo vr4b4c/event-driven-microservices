@@ -10,9 +10,9 @@ module OrdersService
         when :production
           Aws::DynamoDB::Resource.new(
             client: Aws::DynamoDB::Client.new(
-              region: ENV.fetch('ORDERS_SERVICE_DYNAMO_REGION')
+              region: ENV.fetch('DYNAMO_REGION')
             )
-          ).table(ENV.fetch('ORDERS_SERVICE_DYNAMO_TABLE_NAME'))
+          ).table(ENV.fetch('DYNAMO_TABLE_NAME'))
         when :test
           TestHelpers::DynamoDBTable.instance
         else
@@ -26,7 +26,7 @@ module OrdersService
         case app_env
         when :production
           Aws::SQS::Client.new(
-            region: ENV.fetch('ORDERS_SERVICE_ORDER_CREATED_QUEUE_REGION')
+            region: ENV.fetch('ORDER_CREATED_QUEUE_REGION')
           )
         when :test
           TestHelpers::SqsClient.instance
@@ -37,12 +37,12 @@ module OrdersService
 
       # @return [String]
       # @raise [ArgumentError]
-      def sqs_queue_url = ENV.fetch('ORDERS_SERVICE_ORDER_CREATED_QUEUE_URL')
+      def sqs_queue_url = ENV.fetch('ORDER_CREATED_QUEUE_URL')
 
       private
 
       # @return [Symbol]
-      def app_env = @app_env ||= ENV.fetch('ORDERS_SERVICE_APP_ENV').to_sym
+      def app_env = @app_env ||= ENV.fetch('APP_ENV').to_sym
     end
   end
 end
