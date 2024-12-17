@@ -2,3 +2,7 @@
 
 *.tfstate
 *.tfstate.*
+
+**/spec/examples.txt
+**/src/vendor
+**/dist/

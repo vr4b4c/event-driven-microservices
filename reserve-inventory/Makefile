@@ -29,13 +29,13 @@ dist-archive:
 	 $(MAKE) upload-dist-archive
 
 dist-image:
-	docker buildx build --platform linux/x86_64 --target dist -t orders-service-dist:x86_64-latest .
+	docker buildx build --platform linux/x86_64 --target dist -t reserve-inventory-dist:x86_64-latest .
 
 extract-dist-archive:
 	set -e; \
-	CONTAINER_ID=$$(docker create --platform linux/x86_64 orders-service-dist:x86_64-latest) ;\
-	docker cp $$CONTAINER_ID:/var/task/orders-service.zip - > dist/orders-service.zip; \
+	CONTAINER_ID=$$(docker create --platform linux/x86_64 reserve-inventory-dist:x86_64-latest) ;\
+	docker cp $$CONTAINER_ID:/var/task/reserve-inventory.zip - > dist/reserve-inventory.zip; \
 	docker rm -v $$CONTAINER_ID;
 
 upload-dist-archive:
-	aws s3 cp --profile=private-dev --region=eu-central-1 dist/orders-service.zip s3://ordering-platform-api
+	aws s3 cp --profile=private-dev --region=eu-central-1 dist/reserve-inventory.zip s3://ordering-platform-api
