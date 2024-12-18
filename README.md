@@ -5,6 +5,7 @@
 - [ ] Consistently name Makefile targets
 - [ ] Research scalable mono-repo terraform files organization
 - [ ] Move tfstate to remote backend ([idea](https://github.com/infinum/infrastructure-template/blob/main/terraform/init/AWS/README.md))
+- [ ] Add Git hooks for linting
 
 ## System architecture diagram
 ![System diagram](assets/system-diagram.svg)
