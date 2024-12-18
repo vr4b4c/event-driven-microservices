@@ -1,3 +1,6 @@
+setup:
+	pre-commit install --install-hooks
+
 init:
 	$(MAKE) -C infra init
 	$(MAKE) -C orders-service init
