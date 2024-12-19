@@ -1,18 +1,24 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "$0")/.." || exit
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
+echo "Configure direnv..."
 if ! command -v direnv > /dev/null 2>&1
 then
-  echo "direnv could not be found"
+  echo "direnv binary could not be found"
   exit 1
 else
-  [ ! -f .envrc ] && cp .envrc.sample .envrc
+  if [ ! -f "$ROOT_DIR/.envrc" ]; then
+    cp "$ROOT_DIR/.envrc.sample" "$ROOT_DIR/.envrc"
+  else
+    echo ".envrc already initialized, skipping..."
+  fi
 fi
 
+echo "Configure pre-commit..."
 if ! command -v pre-commit > /dev/null 2>&1
 then
-  echo "pre-commit could not be found"
+  echo "pre-commit binary could not be found"
   exit 1
 else
   pre-commit install --install-hooks
