@@ -31,19 +31,3 @@ make tf-init action=destroy project=infinum-e-d-m-ecomm region=eu-central-1 envi
 
 ## Terraform AWS authentication
 AWS provider authentication is done through environment variables. Check [AWS docs](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-envvars.html) for more details on available options.
-
-## Infrastructure management
-Show infra execution plan for platform and all services. Note it might not work for if dependant state is not up-to-date for interconnected services.
-```bash
-make plan
-```
-
-Apply infra plan for platform and all services.
-```bash
-make apply
-```
-
-Remove infra resources for platform and all services.
-```bash
-make destroy
-```
