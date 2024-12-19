@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "$0")/../../infra" || exit
+set -euxo pipefail
+
+# shellcheck disable=SC2154
+cd "$(dirname "$0")/../../terraform/envs/$env" || exit
 api_base=$(terraform output -json | jq -r .api_base_url.value)
 
 curl -v "$api_base/orders" \

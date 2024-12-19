@@ -5,13 +5,11 @@ module OrdersService
     class << self
       # @return [Aws::DynamoDB::Table]
       # @raise [ArgumentError]
-      def dynamo_table # rubocop:disable Metrics/MethodLength
+      def dynamo_table
         case app_env
-        when :production
+        when :dev
           Aws::DynamoDB::Resource.new(
-            client: Aws::DynamoDB::Client.new(
-              region: ENV.fetch('DYNAMO_REGION')
-            )
+            client: Aws::DynamoDB::Client.new(region: ENV.fetch('DYNAMO_REGION'))
           ).table(ENV.fetch('DYNAMO_TABLE_NAME'))
         when :test
           TestHelpers::DynamoDBTable.instance
@@ -24,10 +22,8 @@ module OrdersService
       # @raise [ArgumentError]
       def sqs_client
         case app_env
-        when :production
-          Aws::SQS::Client.new(
-            region: ENV.fetch('ORDER_CREATED_QUEUE_REGION')
-          )
+        when :dev
+          Aws::SQS::Client.new(region: ENV.fetch('ORDER_CREATED_QUEUE_REGION'))
         when :test
           TestHelpers::SqsClient.instance
         else

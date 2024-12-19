@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "ordering_platform_api" {
-  bucket        = "ordering-platform-api"
+  bucket        = "ordering-platform-api-2"
   force_destroy = true
 }
 

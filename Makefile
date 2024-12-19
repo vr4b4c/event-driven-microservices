@@ -1,41 +1,26 @@
-setup:
-	bin/setup
+.PHONY: dev-setup
+dev-setup:
+	@bin/setup
 
-init:
-	$(MAKE) -C infra init
-	$(MAKE) -C orders-service init
-	$(MAKE) -C reserve-inventory init
+.PHONY: tf-init
+tf-init:
+	$(MAKE) -C terraform init
 
-plan:
-	$(MAKE) -C infra plan
-	$(MAKE) -C orders-service infra-plan
-	$(MAKE) -C reserve-inventory infa-plan
+.PHONY: tf-dev-apply
+tf-dev-apply:
+	$(MAKE) -C terraform/envs/dev apply
+	$(MAKE) -C orders-service dist-archive env=dev
+	$(MAKE) -C terraform/envs/dev/orders-service apply
+	$(MAKE) -C reserve-inventory dist-archive env=dev
+	$(MAKE) -C terraform/envs/dev/reserve-inventory apply
 
-apply:
-	$(MAKE) -C infra apply
-	$(MAKE) -C orders-service apply
-	$(MAKE) -C reserve-inventory apply
+.PHONY: tf-dev-destroy
+tf-dev-destroy:
+	$(MAKE) -C terraform/envs/dev/reserve-inventory destroy
+	$(MAKE) -C terraform/envs/dev/orders-service destroy
+	$(MAKE) -C terraform/envs/dev destroy
 
-destroy:
-	$(MAKE) -C reserve-inventory infra-destroy
-	$(MAKE) -C orders-service infra-destroy
-	$(MAKE) -C infra destroy
-
+.PHONY: test
 test:
 	$(MAKE) -C orders-service test
 	$(MAKE) -C reserve-inventory test
-
-platform-infra-plan:
-	$(MAKE) -C infra plan
-
-platform-infra-apply:
-	$(MAKE) -C infra apply
-
-orders-service-infra-plan:
-	$(MAKE) -C orders-service infra-plan
-
-orders-service-infra-apply:
-	$(MAKE) -C orders-service infra-apply
-
-orders-service-apply:
-	$(MAKE) -C orders-service apply

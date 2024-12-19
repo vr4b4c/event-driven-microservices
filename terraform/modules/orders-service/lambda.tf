@@ -21,11 +21,11 @@ resource "aws_iam_role_policy_attachment" "orders_service" {
 
 resource "aws_lambda_function" "orders_service" {
   function_name    = "orders_service"
-  s3_bucket        = data.terraform_remote_state.global.outputs.ordering_platform_api_s3_bucket_id
+  s3_bucket        = var.s3_bucket_id
   s3_key           = var.app_archive_s3_key
   runtime          = "ruby3.3"
   handler          = "function.Function.perform"
-  source_code_hash = filebase64sha256("../${var.app_archive_path}")
+  source_code_hash = filebase64sha256("${path.module}/../../../orders-service/${var.app_archive_path}")
   role             = aws_iam_role.orders_service.arn
 
   environment {
@@ -34,7 +34,7 @@ resource "aws_lambda_function" "orders_service" {
       DYNAMO_TABLE_NAME          = aws_dynamodb_table.orders.name
       DYNAMO_REGION              = var.region
       ORDER_CREATED_QUEUE_REGION = var.region
-      ORDER_CREATED_QUEUE_URL    = data.terraform_remote_state.global.outputs.ordering_platform_api_order_created_queue_id
+      ORDER_CREATED_QUEUE_URL    = var.order_created_queue_id
 
     }
   }
