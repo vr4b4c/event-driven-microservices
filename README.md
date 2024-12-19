@@ -7,6 +7,7 @@
 - [ ] Move tfstate to remote backend ([idea](https://github.com/infinum/infrastructure-template/blob/main/terraform/init/AWS/README.md))
 - [x] Add Git hooks for linting
 - [x] Document setup
+- [ ] Extract common service logic into reusable package
 
 ## System architecture diagram
 ![System diagram](assets/system-diagram.svg)
