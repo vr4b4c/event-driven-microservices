@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")/.." || exit
+
+if ! command -v direnv > /dev/null 2>&1
+then
+  echo "direnv could not be found"
+  exit 1
+else
+  [ ! -f .envrc ] && cp .envrc.sample .envrc
+fi
+
+if ! command -v pre-commit > /dev/null 2>&1
+then
+  echo "pre-commit could not be found"
+  exit 1
+else
+  pre-commit install --install-hooks
+fi

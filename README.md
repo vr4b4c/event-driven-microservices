@@ -9,3 +9,9 @@
 
 ## System architecture diagram
 ![System diagram](assets/system-diagram.svg)
+
+## Project setup
+Configures env var manager ([direnv](https://direnv.net/)) and git hooks manager([pre-commit](https://pre-commit.com/))
+```bash
+make setup
+```

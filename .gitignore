@@ -6,3 +6,5 @@
 **/spec/examples.txt
 **/src/vendor
 **/dist/
+
+.envrc

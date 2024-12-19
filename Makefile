@@ -1,5 +1,5 @@
 setup:
-	pre-commit install --install-hooks
+	bin/setup
 
 init:
 	$(MAKE) -C infra init
