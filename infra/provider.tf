@@ -10,6 +10,5 @@ terraform {
 }
 
 provider "aws" {
-  profile = "private-dev"
   region = var.region
 }

@@ -4,7 +4,7 @@ resource "aws_dynamodb_table" "orders" {
   read_capacity  = 1
   write_capacity = 1
 
- attribute {
+  attribute {
     name = "order_id"
     type = "S"
   }

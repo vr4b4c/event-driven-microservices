@@ -30,8 +30,8 @@ resource "aws_lambda_function" "reserve_inventory" {
 
   environment {
     variables = {
-      APP_ENV           = var.env
-      DYNAMO_REGION     = var.region
+      APP_ENV       = var.env
+      DYNAMO_REGION = var.region
 
     }
   }
@@ -63,5 +63,5 @@ resource "aws_iam_role_policy_attachment" "reserve_inventory_others" {
 resource "aws_lambda_event_source_mapping" "reserve_inventory" {
   event_source_arn = data.terraform_remote_state.global.outputs.ordering_platform_api_order_created_queue_arn
 
-  function_name    = aws_lambda_function.reserve_inventory.arn
+  function_name = aws_lambda_function.reserve_inventory.arn
 }
