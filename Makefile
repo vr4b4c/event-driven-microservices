@@ -6,6 +6,11 @@ init:
 	$(MAKE) -C orders-service init
 	$(MAKE) -C reserve-inventory init
 
+plan:
+	$(MAKE) -C infra plan
+	$(MAKE) -C orders-service infra-plan
+	$(MAKE) -C reserve-inventory infa-plan
+
 apply:
 	$(MAKE) -C infra apply
 	$(MAKE) -C orders-service apply
