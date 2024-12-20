@@ -1,11 +1,19 @@
-provider "aws" {
+terraform {
+  backend "s3" {
+    region         = "eu-central-1"
+    bucket         = "terraform-e-d-m-ecomm"
+    key            = "envs/dev/reserve-inventory/terraform.tfstate"
+    dynamodb_table = "terraform-e-d-m-ecomm"
+  }
 }
 
 data "terraform_remote_state" "env" {
-  backend = "local"
+  backend = "s3"
 
   config = {
-    path = "../terraform.tfstate"
+    region = "eu-central-1"
+    bucket = "terraform-e-d-m-ecomm"
+    key    = "envs/dev/terraform.tfstate"
   }
 }
 

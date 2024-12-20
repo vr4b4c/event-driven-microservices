@@ -4,7 +4,7 @@
 - [x] Add system architecture diagram
 - [x] Consistently name Makefile targets
 - [x] Research scalable mono-repo terraform files organization ([Anton Pura](https://www.youtube.com/watch?v=nMVXs8VnrF4), [Infinum DevOps](https://github.com/infinum/infrastructure-template/blob/main/terraform/README.md))
-- [ ] Move tfstate to remote backend ([idea](https://github.com/infinum/infrastructure-template/blob/main/terraform/init/AWS/README.md))
+- [x] Move tfstate to remote backend ([Infinum DevOps](https://github.com/infinum/infrastructure-template/blob/main/terraform/init/AWS/README.md), [Anton Pura](https://www.youtube.com/watch?v=GgQE85Aq2z4))
 - [x] Add Git hooks for linting
 - [x] Document setup
 - [ ] Extract common service logic into reusable package

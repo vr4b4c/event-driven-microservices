@@ -8,20 +8,17 @@ dev-setup:
 tf-configure-backend:
 	$(MAKE) -C terraform configure-backend
 
+.PHONY: tf-dev-init
+tf-dev-init:
+	$(MAKE) -C terraform dev-init
 
 .PHONY: tf-dev-apply
 tf-dev-apply:
-	$(MAKE) -C terraform/envs/dev apply
-	$(MAKE) -C orders-service dist-archive env=dev
-	$(MAKE) -C terraform/envs/dev/orders-service apply
-	$(MAKE) -C reserve-inventory dist-archive env=dev
-	$(MAKE) -C terraform/envs/dev/reserve-inventory apply
+	$(MAKE) -C terraform dev-apply
 
 .PHONY: tf-dev-destroy
 tf-dev-destroy:
-	$(MAKE) -C terraform/envs/dev/reserve-inventory destroy
-	$(MAKE) -C terraform/envs/dev/orders-service destroy
-	$(MAKE) -C terraform/envs/dev destroy
+	$(MAKE) -C terraform dev-destroy
 
 .PHONY: test
 test:
