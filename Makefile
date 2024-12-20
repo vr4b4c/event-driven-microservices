@@ -1,6 +1,8 @@
 .PHONY: dev-setup
 dev-setup:
 	@bin/setup
+	$(MAKE) -C orders-service deps-install
+	$(MAKE) -C reserve-inventory deps-install
 
 .PHONY: tf-init
 tf-init:
