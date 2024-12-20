@@ -1,9 +1,8 @@
 terraform {
   backend "s3" {
-    region         = "eu-central-1"
-    bucket         = "terraform-e-d-m-ecomm"
-    key            = "envs/dev/reserve-inventory/terraform.tfstate"
-    dynamodb_table = "terraform-e-d-m-ecomm"
+    region = "eu-central-1"
+    bucket = "terraform-e-d-m-ecomm"
+    key    = "envs/dev/reserve-inventory/terraform.tfstate"
   }
 }
 

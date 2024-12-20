@@ -8,6 +8,7 @@
 - [x] Add Git hooks for linting
 - [x] Document setup
 - [ ] Extract common service logic into reusable package
+- [x] Remove DynamoDB for backend locking (replaced by native S3 locking)
 
 ## System architecture diagram
 ![System diagram](assets/system-diagram.svg)
@@ -19,14 +20,14 @@ make setup
 ```
 
 ## Terraform remote AWS S3 backend
-Terraform remote S3 backend initialization consists of creating AWS S3 bucket for hosting remote terraform state, and AWS DynamoDB table for concurrency control.
+To create Terraform backend resources (S3 bucket) use
 ```bash
-make tf-configure-backend action=create resource=terraform-e-d-m-ecomm region=eu-central-1
+make tf-configure-backend action=create resource=terraform-e-d-m-ecomm-2nd-gen region=eu-central-1
 ```
 
-To remove infrastructure environment use following command
+To remove Terraform backend resources use
 ```bash
-make tf-configure-backend action=destroy resource=terraform-e-d-m-ecomm region=eu-central-1
+make tf-configure-backend action=destroy resource=terraform-e-d-m-ecomm-2nd-gen region=eu-central-1
 ```
 
 ## Terraform AWS authentication
