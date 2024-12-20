@@ -1,3 +1,3 @@
-.PHONY: init
-init:
-	init/run
+.PHONY: configure-backend
+configure-backend:
+	@backend/configure

@@ -4,9 +4,10 @@ dev-setup:
 	$(MAKE) -C orders-service deps-install
 	$(MAKE) -C reserve-inventory deps-install
 
-.PHONY: tf-init
-tf-init:
-	$(MAKE) -C terraform init
+.PHONY: tf-configue-backend
+tf-configure-backend:
+	$(MAKE) -C terraform configure-backend
+
 
 .PHONY: tf-dev-apply
 tf-dev-apply:

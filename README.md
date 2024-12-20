@@ -18,15 +18,15 @@ Configures env var manager ([direnv](https://direnv.net/)) and git hooks manager
 make setup
 ```
 
-## Terraform environment initialization
-Initialize each infrastructure environment. Terraform environment initialization consists of creating AWS S3 bucket for hosting remote terraform state, and AWS DynamoDB table for concurrency control.
+## Terraform remote AWS S3 backend
+Terraform remote S3 backend initialization consists of creating AWS S3 bucket for hosting remote terraform state, and AWS DynamoDB table for concurrency control.
 ```bash
-make tf-init action=create project=infinum-e-d-m-ecomm region=eu-central-1 environment=production
+make tf-configure-backend action=create resource=terraform-e-d-m-ecomm region=eu-central-1
 ```
 
 To remove infrastructure environment use following command
 ```bash
-make tf-init action=destroy project=infinum-e-d-m-ecomm region=eu-central-1 environment=production
+make tf-configure-backend action=destroy resource=terraform-e-d-m-ecomm region=eu-central-1
 ```
 
 ## Terraform AWS authentication
