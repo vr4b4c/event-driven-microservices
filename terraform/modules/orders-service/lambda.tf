@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "orders_service" {
 }
 
 resource "aws_iam_role" "orders_service" {
-  name               = "orders_service"
+  name               = "orders-service"
   assume_role_policy = data.aws_iam_policy_document.orders_service.json
 }
 
@@ -20,7 +20,7 @@ resource "aws_iam_role_policy_attachment" "orders_service" {
 }
 
 resource "aws_lambda_function" "orders_service" {
-  function_name    = "orders_service"
+  function_name    = "orders-service"
   s3_bucket        = var.s3_bucket_id
   s3_key           = var.app_archive_s3_key
   runtime          = "ruby3.3"

@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_api" "ordering_platform_api" {
-  name          = "ordering_platform_api"
+  name          = "ordering-platform-api"
   protocol_type = "HTTP"
 }
 

@@ -20,7 +20,7 @@ resource "aws_iam_role_policy_attachment" "reserve_inventory" {
 }
 
 resource "aws_lambda_function" "reserve_inventory" {
-  function_name    = "reserve_inventory"
+  function_name    = "reserve-inventory"
   s3_bucket        = var.s3_bucket_id
   s3_key           = var.app_archive_s3_key
   runtime          = "ruby3.3"
